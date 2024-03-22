@@ -29,3 +29,4 @@ if __name__ == "__main__":
         insertaEnArbolTrinario(arbol_trinario, int(num))
     print(arbol_trinario)
 
+
