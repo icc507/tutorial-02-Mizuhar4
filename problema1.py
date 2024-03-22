@@ -9,6 +9,17 @@
 #		  mundo 44
 #La salida debe ser
 #         ('mundo', 44, 20, 90, 'hola', 'mundo', 44)
+
+def transInt(lista):
+    nuevaLista = []
+    for elemento in lista:
+        try:
+            nuevoElemento = int(elemento)
+        except ValueError:
+            nuevoElemento = elemento
+        nuevaLista.append(nuevoElemento)
+    return tuple(nuevaLista)
+    
 t = input().split()
 m = input().split()
 
