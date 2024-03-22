@@ -17,4 +17,4 @@ m = tuple(m)
 
 resultado = m + t + m
 
-print(tuple(resultado))
+print(resultado)
