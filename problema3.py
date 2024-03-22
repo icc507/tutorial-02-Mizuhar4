@@ -22,39 +22,10 @@ def insertaEnArbolTrinario(arbol, numero):
     else:
         insertaEnArbolTrinario(arbol[3], numero)
 
-def estaEnArbolTrinario(arbol, numero):
-    if arbol == []:
-        return False
-    elif numero == arbol[0]:
-        return True
-    elif numero < arbol[0]:
-        return estaEnArbolTrinario(arbol[1], numero)
-    else:
-        return estaEnArbolTrinario(arbol[3], numero)
-
-def imprimirArbolTrinario(arbol):
-    if arbol:
-        print("[", arbol[0], end="")
-        if arbol[1] or arbol[2] or arbol[3]:
-            print(", ", end="")
-        imprimirArbolTrinario(arbol[1])
-        if arbol[2]:
-            print(", [", end="")
-            for i in range(len(arbol[2])):
-                if i > 0:
-                    print(", ", end="")
-                print(arbol[2][i], end="")
-            print("]", end="")
-        if arbol[3]:
-            print(", ", end="")
-            imprimirArbolTrinario(arbol[3])
-        print("]", end="")
-
-
 if __name__ == "__main__":
     numeros = input().split()
     arbol_trinario = []
     for num in numeros:
         insertaEnArbolTrinario(arbol_trinario, int(num))
-    imprimirArbolTrinario(arbol_trinario)
+    print(arbol_trinario)
 
