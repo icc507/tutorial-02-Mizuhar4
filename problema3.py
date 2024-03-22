@@ -9,46 +9,52 @@
 #         20 30 90 90 8 5 90
 #La salida debe ser
 #         [20, [8, [5, [], [], []], [], []], [], [30, [], [], [90, [], [90, [], [90, [], [], []], []], []]]]
-def insert_trinary(root, num):
-    if not root:
-        return [num, [], [], []]
-    if num < root[0]:
-        root[1] = insert_trinary(root[1], num)
-    elif num == root[0]:
-        if not root[2]:
-            root[2] = []
-        root[2].append(num)
+def arbolTrinario(numero):
+    return [numero, [], [], []]
+
+def insertaEnArbolTrinario(arbol, numero):
+    if arbol == []:
+        arbol += arbolTrinario(numero)
+    elif numero < arbol[0]:
+        insertaEnArbolTrinario(arbol[1], numero)
+    elif numero == arbol[0]:
+        arbol[2].append(numero)
     else:
-        root[3] = insert_trinary(root[3], num)
-    return root
+        insertaEnArbolTrinario(arbol[3], numero)
 
-def construct_trinary_tree(numbers):
-    numbers = numbers.split()
-    valid_numbers = []
-    for num in numbers:
-        num = ''.join(filter(str.isdigit, num))
-        if num:
-            valid_numbers.append(int(num))
-    root = None
-    for num in valid_numbers:
-        root = insert_trinary(root, num)
-    return root
+def estaEnArbolTrinario(arbol, numero):
+    if arbol == []:
+        return False
+    elif numero == arbol[0]:
+        return True
+    elif numero < arbol[0]:
+        return estaEnArbolTrinario(arbol[1], numero)
+    else:
+        return estaEnArbolTrinario(arbol[3], numero)
 
-def print_trinary_tree(root):
-    if not root:
-        return
-    print("[", root[0], end="")
-    if root[1] or root[2] or root[3]:
-        print(", ", end="")
-    print_trinary_tree(root[1])
-    if root[2]:
-        print(", ", root[2], end="")
-    if root[3]:
-        print(", ", end="")
-        print_trinary_tree(root[3])
-    print("]", end="")
+def imprimirArbolTrinario(arbol):
+    if arbol:
+        print("[", arbol[0], end="")
+        if arbol[1] or arbol[2] or arbol[3]:
+            print(", ", end="")
+        imprimirArbolTrinario(arbol[1])
+        if arbol[2]:
+            print(", [", end="")
+            for i in range(len(arbol[2])):
+                if i > 0:
+                    print(", ", end="")
+                print(arbol[2][i], end="")
+            print("]", end="")
+        if arbol[3]:
+            print(", ", end="")
+            imprimirArbolTrinario(arbol[3])
+        print("]", end="")
+
 
 if __name__ == "__main__":
-    numbers = input()
-    trinary_tree = construct_trinary_tree(numbers)
-    print_trinary_tree(trinary_tree)
+    numeros = input().split()
+    arbol_trinario = []
+    for num in numeros:
+        insertaEnArbolTrinario(arbol_trinario, int(num))
+    imprimirArbolTrinario(arbol_trinario)
+
