@@ -19,12 +19,12 @@ def transInt(lista):
             nuevoElemento = elemento
         nuevaLista.append(nuevoElemento)
     return tuple(nuevaLista)
-    
+
 t = input().split()
 m = input().split()
 
-t = tuple(t)
-m = tuple(m)
+t = transInt(t)
+m = transInt(m)
 
 resultado = m + t + m
 
