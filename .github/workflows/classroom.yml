@@ -1,0 +1,166 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: p1_caso1
+      id: p1_caso1
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p1_caso1
+        command: python3 problema1.py
+        input: "20 50 90\r\nji kilo 77"
+        expected-output: "('ji', 'kilo', 77, 20, 50, 90, 'ji', 'kilo', 77)"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p1_caso2
+      id: p1_caso2
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p1_caso2
+        command: python3 problema1.py
+        input: "20\r\nwer tic"
+        expected-output: "('wer', 'tic', 20, 'wer', 'tic')"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p1_caso3
+      id: p1_caso3
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p1_caso3
+        command: python3 problema1.py
+        input: "w rik 55\r\n33 90"
+        expected-output: "(33, 90, 'w', 'rik', 55, 33, 90)"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p1_caso4
+      id: p1_caso4
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p1_caso4
+        command: python3 problema1.py
+        input: "lo 33\r\n20"
+        expected-output: "(20, 'lo', 33, 20)"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p2_caso1
+      id: p2_caso1
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p2_caso1
+        command: python3 problema2.py
+        input: '20'
+        expected-output: "(20,)"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p2_caso2
+      id: p2_caso2
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p2_caso2
+        command: python3 problema2.py
+        input: 90 80 wir wir 90
+        expected-output: "(90, 'wir', 'wir', 80, 90)"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p2_caso3
+      id: p2_caso3
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p2_caso3
+        command: python3 problema2.py
+        input: riel camina lento sin mirar
+        expected-output: "('mirar', 'sin', 'lento', 'camina', 'riel')"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p2_caso4
+      id: p2_caso4
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p2_caso4
+        command: python3 problema2.py
+        input: 90 jiji 90
+        expected-output: "(90, 'jiji', 90)"
+        comparison-method: exact
+        timeout: 10
+        max-score: 9
+    - name: p3_caso1
+      id: p3_caso1
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p3_caso1
+        command: python3 problema3.py
+        input: '30'
+        expected-output: "[30, [], [], []]"
+        comparison-method: exact
+        timeout: 10
+        max-score: 7
+    - name: p3_caso2
+      id: p3_caso2
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p3_caso2
+        command: python3 problema3.py
+        input: 90 30 110 30
+        expected-output: "[90, [30, [], [30, [], [], []], []], [], [110, [], [], []]]"
+        comparison-method: exact
+        timeout: 10
+        max-score: 7
+    - name: p3_caso3
+      id: p3_caso3
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p3_caso3
+        command: python3 problema3.py
+        input: 110 24 90 24 110 180 5 180
+        expected-output: "[110, [24, [5, [], [], []], [24, [], [], []], [90, [], [],
+          []]], [110, [], [], []], [180, [], [180, [], [], []], []]]"
+        comparison-method: exact
+        timeout: 10
+        max-score: 7
+    - name: p3_caso4
+      id: p3_caso4
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: p3_caso4
+        command: python3 problema3.py
+        input: 120 120 120
+        expected-output: "[120, [], [120, [], [120, [], [], []], []], []]"
+        comparison-method: exact
+        timeout: 10
+        max-score: 7
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        P1_CASO1_RESULTS: "${{steps.p1_caso1.outputs.result}}"
+        P1_CASO2_RESULTS: "${{steps.p1_caso2.outputs.result}}"
+        P1_CASO3_RESULTS: "${{steps.p1_caso3.outputs.result}}"
+        P1_CASO4_RESULTS: "${{steps.p1_caso4.outputs.result}}"
+        P2_CASO1_RESULTS: "${{steps.p2_caso1.outputs.result}}"
+        P2_CASO2_RESULTS: "${{steps.p2_caso2.outputs.result}}"
+        P2_CASO3_RESULTS: "${{steps.p2_caso3.outputs.result}}"
+        P2_CASO4_RESULTS: "${{steps.p2_caso4.outputs.result}}"
+        P3_CASO1_RESULTS: "${{steps.p3_caso1.outputs.result}}"
+        P3_CASO2_RESULTS: "${{steps.p3_caso2.outputs.result}}"
+        P3_CASO3_RESULTS: "${{steps.p3_caso3.outputs.result}}"
+        P3_CASO4_RESULTS: "${{steps.p3_caso4.outputs.result}}"
+      with:
+        runners: p1_caso1,p1_caso2,p1_caso3,p1_caso4,p2_caso1,p2_caso2,p2_caso3,p2_caso4,p3_caso1,p3_caso2,p3_caso3,p3_caso4
