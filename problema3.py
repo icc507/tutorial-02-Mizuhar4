@@ -19,9 +19,9 @@ def insertaEnArbolTrinario(arbol, numero):
         insertaEnArbolTrinario(arbol[1], numero)
     elif numero == arbol[0]:
         if not arbol[2]:
-            arbol[2] = [[numero, [], [], []]]
+            arbol[2] = [numero, [], [], []]
         else:
-            arbol[2][0].append(numero)
+            insertaEnArbolTrinario(arbol[2], numero)
     else:
         insertaEnArbolTrinario(arbol[3], numero)
 
@@ -31,6 +31,7 @@ if __name__ == "__main__":
     for num in numeros:
         insertaEnArbolTrinario(arbol_trinario, int(num))
     print(arbol_trinario)
+
 
 
 
